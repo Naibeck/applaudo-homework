@@ -15,16 +15,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import java.util.*
 
-class TeamAdapter : RecyclerView.Adapter<TeamAdapter.TeamViewHolder> {
-    private var mTeamList: ArrayList<Team>
-    private var mContext: Context
-    private var mItemTeamClick: ItemTeamClick<Team>
-
-    constructor(teamList: ArrayList<Team>, context: Context, itemTeamClick: ItemTeamClick<Team>) {
-        this.mTeamList = teamList
-        this.mContext = context
-        this.mItemTeamClick = itemTeamClick
-    }
+class TeamAdapter(var mTeamList: ArrayList<Team>,
+                  var mContext: Context,
+                  var mItemTeamClick: ItemTeamClick<Team>) : RecyclerView.Adapter<TeamAdapter.TeamViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TeamViewHolder {
         val view: View = LayoutInflater.from(mContext).inflate(R.layout.item_team_list, parent, false)
