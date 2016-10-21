@@ -26,6 +26,8 @@ data class Team(@SerializedName("id") val mId: Int,
             override fun createFromParcel(source: Parcel): Team = Team(source)
             override fun newArray(size: Int): Array<Team?> = arrayOfNulls(size)
         }
+
+        @JvmStatic val TEAM_LIST_TAG: String = "team_data"
     }
 
     constructor(source: Parcel) : this(source.readInt(), source.readString(), source.readString(), source.readString(), source.readString(), source.readString(), source.readString(), source.readString(), source.readString(), source.readString(), source.readString(), source.readString(), source.readString(), source.readString(), source.readString(), source.readString(), source.createTypedArrayList(ScheduleGame.CREATOR))

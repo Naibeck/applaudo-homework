@@ -1,4 +1,4 @@
-package com.applaudo.kotlin.applaudohomework.ui.acitivity
+package com.applaudo.kotlin.applaudohomework.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -66,8 +66,8 @@ class TeamListActivity : AppCompatActivity(), ItemTeamClick<Team> {
 
     override fun onItemSelected(item: Team) {
         val intent: Intent = Intent(this, TeamDetailActivity::class.java)
+        intent.putExtra(Team.TEAM_LIST_TAG, item)
         startActivity(intent)
     }
-
 
 }

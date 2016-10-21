@@ -5,7 +5,7 @@
     android:id="@+id/cl_team_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.acitivity.TeamListActivity">
+    tools:context=".ui.activity.TeamListActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
