@@ -4,14 +4,18 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.view.View
+import android.widget.ProgressBar
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.applaudo.kotlin.applaudohomework.R
 import com.applaudo.kotlin.applaudohomework.network.TeamService
 import com.applaudo.kotlin.applaudohomework.network.model.Team
+import com.applaudo.kotlin.applaudohomework.ui.adapter.TeamAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 /**
  * TeamListActivity.kty.kt
@@ -26,6 +30,9 @@ class TeamListActivity : AppCompatActivity() {
 
     @BindView(R.id.rv_team_list_data)
     lateinit var mTeamList: RecyclerView
+
+    @BindView(R.id.pb_team_list_loading)
+    lateinit var mProgressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +51,10 @@ class TeamListActivity : AppCompatActivity() {
         callTeamList.enqueue(object : Callback<List<Team>> {
             override fun onResponse(call: Call<List<Team>>?, response: Response<List<Team>>?) {
                 //TODO: Will handle the adapter to set for RecyclerView
+                val teamList: ArrayList<Team> = response!!.body() as ArrayList<Team>
+                val adapter: TeamAdapter = TeamAdapter(teamList, applicationContext)
+                mTeamList.adapter = adapter
+                mProgressBar.visibility = View.GONE
             }
 
             override fun onFailure(call: Call<List<Team>>?, t: Throwable?) {
