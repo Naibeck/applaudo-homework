@@ -1,13 +1,11 @@
 package com.applaudo.kotlin.applaudohomework.network.model
 
-import java.util.*
 import android.os.Parcel
 import android.os.Parcelable
-
 import com.google.gson.annotations.SerializedName
 
-data class ScheduleGame(@SerializedName("date") private val mDate: String,
-                        @SerializedName("stadium") private val mStadium: String) : Parcelable {
+data class ScheduleGame(@SerializedName("date") val mDate: String,
+                        @SerializedName("stadium") val mStadium: String) : Parcelable {
     companion object {
         @JvmField val CREATOR: Parcelable.Creator<ScheduleGame> = object : Parcelable.Creator<ScheduleGame> {
             override fun createFromParcel(source: Parcel): ScheduleGame = ScheduleGame(source)

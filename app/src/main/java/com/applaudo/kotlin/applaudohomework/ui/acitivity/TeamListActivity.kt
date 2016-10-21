@@ -7,6 +7,11 @@ import android.support.v7.widget.Toolbar
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.applaudo.kotlin.applaudohomework.R
+import com.applaudo.kotlin.applaudohomework.network.TeamService
+import com.applaudo.kotlin.applaudohomework.network.model.Team
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 /**
  * TeamListActivity.kty.kt
@@ -30,6 +35,22 @@ class TeamListActivity : AppCompatActivity() {
 
         setSupportActionBar(mToolbar)
         setTitle(R.string.app_name)
+
+        getTeamName()
+    }
+
+    private fun getTeamName() {
+        val callTeamList: Call<List<Team>> = TeamService.getAPI().getTeamList()
+        callTeamList.enqueue(object : Callback<List<Team>> {
+            override fun onResponse(call: Call<List<Team>>?, response: Response<List<Team>>?) {
+                //TODO: Will handle the adapter to set for RecyclerView
+            }
+
+            override fun onFailure(call: Call<List<Team>>?, t: Throwable?) {
+
+            }
+
+        })
     }
 
 }
