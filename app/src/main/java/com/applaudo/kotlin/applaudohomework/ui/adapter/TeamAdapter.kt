@@ -18,10 +18,12 @@ import java.util.*
 class TeamAdapter : RecyclerView.Adapter<TeamAdapter.TeamViewHolder> {
     private var mTeamList: ArrayList<Team>
     private var mContext: Context
+    private var mItemTeamClick: ItemTeamClick<Team>
 
-    constructor(teamList: ArrayList<Team>, context: Context) {
+    constructor(teamList: ArrayList<Team>, context: Context, itemTeamClick: ItemTeamClick<Team>) {
         this.mTeamList = teamList
         this.mContext = context
+        this.mItemTeamClick = itemTeamClick
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TeamViewHolder {
@@ -41,8 +43,8 @@ class TeamAdapter : RecyclerView.Adapter<TeamAdapter.TeamViewHolder> {
                 .into(holder!!.teamPicture)
         holder.teamName.text = mTeamList[position].mTeamName
         holder.teamDescription.text = mTeamList[position].mDescription
+        holder.bind(mTeamList[position], mItemTeamClick)
     }
-
 
     class TeamViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         @BindView(R.id.iv_item_team_picture)
@@ -56,6 +58,10 @@ class TeamAdapter : RecyclerView.Adapter<TeamAdapter.TeamViewHolder> {
 
         init {
             ButterKnife.bind(this, view)
+        }
+
+        fun bind(teams: Team, listener: ItemTeamClick<Team>) {
+            itemView.setOnClickListener { listener.onItemSelected(teams) }
         }
 
     }

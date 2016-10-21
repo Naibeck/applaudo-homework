@@ -1,5 +1,6 @@
 package com.applaudo.kotlin.applaudohomework.ui.acitivity
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
@@ -11,6 +12,7 @@ import butterknife.ButterKnife
 import com.applaudo.kotlin.applaudohomework.R
 import com.applaudo.kotlin.applaudohomework.network.TeamService
 import com.applaudo.kotlin.applaudohomework.network.model.Team
+import com.applaudo.kotlin.applaudohomework.ui.adapter.ItemTeamClick
 import com.applaudo.kotlin.applaudohomework.ui.adapter.TeamAdapter
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,8 +25,7 @@ import java.util.*
  * This class will handle the list for teams and will handle the clicks
  */
 
-class TeamListActivity : AppCompatActivity() {
-
+class TeamListActivity : AppCompatActivity(), ItemTeamClick<Team> {
     @BindView(R.id.toolbar)
     lateinit var mToolbar: Toolbar
 
@@ -43,16 +44,15 @@ class TeamListActivity : AppCompatActivity() {
         setSupportActionBar(mToolbar)
         setTitle(R.string.app_name)
 
-        getTeamName()
+        getTeams()
     }
 
-    private fun getTeamName() {
+    private fun getTeams() {
         val callTeamList: Call<List<Team>> = TeamService.getAPI().getTeamList()
         callTeamList.enqueue(object : Callback<List<Team>> {
             override fun onResponse(call: Call<List<Team>>?, response: Response<List<Team>>?) {
-                //TODO: Will handle the adapter to set for RecyclerView
                 val teamList: ArrayList<Team> = response!!.body() as ArrayList<Team>
-                val adapter: TeamAdapter = TeamAdapter(teamList, applicationContext)
+                val adapter: TeamAdapter = TeamAdapter(teamList, applicationContext, this@TeamListActivity)
                 mTeamList.adapter = adapter
                 mProgressBar.visibility = View.GONE
             }
@@ -63,5 +63,11 @@ class TeamListActivity : AppCompatActivity() {
 
         })
     }
+
+    override fun onItemSelected(item: Team) {
+        val intent: Intent = Intent(this, TeamDetailActivity::class.java)
+        startActivity(intent)
+    }
+
 
 }
