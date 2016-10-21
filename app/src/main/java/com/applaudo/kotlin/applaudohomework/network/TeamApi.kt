@@ -7,4 +7,9 @@ import retrofit2.http.GET
 interface TeamApi {
     @GET("/external/applaudo_homework.json")
     fun getTeamList(): Call<List<Team>>
+
+    companion object {
+        val URL: String = "http://applaudostudios.com"
+    }
+
 }
