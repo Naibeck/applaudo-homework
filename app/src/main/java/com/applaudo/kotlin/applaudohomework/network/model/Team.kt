@@ -1,5 +1,9 @@
 package com.applaudo.kotlin.applaudohomework.network.model
 
+import java.util.*
+import android.os.Parcel
+import android.os.Parcelable
+
 import com.google.gson.annotations.SerializedName
 
 data class Team(@SerializedName("id") private val mId: Int,
@@ -18,4 +22,35 @@ data class Team(@SerializedName("id") private val mId: Int,
                 @SerializedName("phone_number") private val mPhoneNumber: String,
                 @SerializedName("description") private val mDescription: String,
                 @SerializedName("video_url") private val mVideoUrl: String,
-                @SerializedName("schedule_games") private val mGames: List<ScheduleGame>)
+                @SerializedName("schedule_games") private val mGames: List<ScheduleGame>) : Parcelable {
+    companion object {
+        @JvmField val CREATOR: Parcelable.Creator<Team> = object : Parcelable.Creator<Team> {
+            override fun createFromParcel(source: Parcel): Team = Team(source)
+            override fun newArray(size: Int): Array<Team?> = arrayOfNulls(size)
+        }
+    }
+
+    constructor(source: Parcel) : this(source.readInt(), source.readString(), source.readString(), source.readString(), source.readString(), source.readString(), source.readString(), source.readString(), source.readString(), source.readString(), source.readString(), source.readString(), source.readString(), source.readString(), source.readString(), source.readString(), source.createTypedArrayList(ScheduleGame.CREATOR))
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel?, flags: Int) {
+        dest?.writeInt(mId)
+        dest?.writeString(mTeamName)
+        dest?.writeString(mSince)
+        dest?.writeString(mCoach)
+        dest?.writeString(mTeamNickname)
+        dest?.writeString(mStadium)
+        dest?.writeString(mImgLogo)
+        dest?.writeString(mImgStadium)
+        dest?.writeString(mLatitude)
+        dest?.writeString(mLongitude)
+        dest?.writeString(mWebsite)
+        dest?.writeString(mTicketsUrl)
+        dest?.writeString(mAddress)
+        dest?.writeString(mPhoneNumber)
+        dest?.writeString(mDescription)
+        dest?.writeString(mVideoUrl)
+        dest?.writeTypedList(mGames)
+    }
+}
