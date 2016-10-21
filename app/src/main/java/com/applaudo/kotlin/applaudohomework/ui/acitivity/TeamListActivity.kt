@@ -30,7 +30,6 @@ class TeamListActivity : AppCompatActivity() {
 
         setSupportActionBar(mToolbar)
         setTitle(R.string.app_name)
-
     }
 
 }
