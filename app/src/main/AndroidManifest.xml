@@ -20,7 +20,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.TeamDetailActivity" />
+        <activity
+            android:name=".ui.activity.TeamDetailActivity"
+            android:parentActivityName=".ui.activity.TeamListActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
