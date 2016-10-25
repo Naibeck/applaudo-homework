@@ -26,8 +26,7 @@ class TeamDetailActivity : AppCompatActivity() {
         ButterKnife.bind(this)
 
         setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true);
-
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         if (savedInstanceState == null) {
             val team: Team = intent.getParcelableExtra(Team.TEAM_LIST_TAG)
