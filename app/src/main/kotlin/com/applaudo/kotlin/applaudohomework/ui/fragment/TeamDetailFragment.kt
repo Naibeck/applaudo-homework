@@ -1,5 +1,6 @@
 package com.applaudo.kotlin.applaudohomework.ui.fragment
 
+import android.graphics.Camera
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -14,6 +15,13 @@ import butterknife.ButterKnife
 import com.applaudo.kotlin.applaudohomework.R
 import com.applaudo.kotlin.applaudohomework.network.model.Team
 import com.bumptech.glide.Glide
+import com.google.android.gms.maps.CameraUpdate
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+
 
 class TeamDetailFragment : Fragment() {
 
@@ -30,6 +38,8 @@ class TeamDetailFragment : Fragment() {
     lateinit var teamVideo: VideoView
 
     lateinit private var mTeam: Team
+
+    lateinit private var mSupportFragment: SupportMapFragment
 
     companion object {
         fun getInstance(team: Team): TeamDetailFragment {
@@ -59,11 +69,25 @@ class TeamDetailFragment : Fragment() {
                 .into(teamPicture)
         teamVideo.setVideoURI(Uri.parse(mTeam.mVideoUrl))
         teamVideo.start()
+        mSupportFragment.getMapAsync { googleMap ->
+            val latLng: LatLng = LatLng(java.lang.Double.valueOf(mTeam.mLatitude),
+                    java.lang.Double.valueOf(mTeam.mLongitude))
+            googleMap.addMarker(MarkerOptions().position(latLng))
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10f))
+        }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         val root: View = inflater!!.inflate(R.layout.fragment_team_detail, container, false)
         ButterKnife.bind(this, root)
+
+        mSupportFragment = SupportMapFragment()
+        activity.supportFragmentManager.beginTransaction()
+                .replace(R.id.fl_map_container, mSupportFragment).commit()
+
         return root
     }
+
+
 }
