@@ -49,7 +49,7 @@ class TeamListActivity : AppCompatActivity(), ItemTeamClick<Team> {
 
         getTeams()
 
-        if (R.id.fl_team_list_detail_container != null) {
+        if (findViewById(R.id.fl_team_list_detail_container) != null) {
             isDetailShow = true
         }
     }
