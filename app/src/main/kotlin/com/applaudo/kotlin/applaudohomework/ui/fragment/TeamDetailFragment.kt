@@ -1,6 +1,5 @@
 package com.applaudo.kotlin.applaudohomework.ui.fragment
 
-import android.graphics.Camera
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -15,10 +14,8 @@ import butterknife.ButterKnife
 import com.applaudo.kotlin.applaudohomework.R
 import com.applaudo.kotlin.applaudohomework.network.model.Team
 import com.bumptech.glide.Glide
-import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
@@ -83,11 +80,10 @@ class TeamDetailFragment : Fragment() {
         ButterKnife.bind(this, root)
 
         mSupportFragment = SupportMapFragment()
-        activity.supportFragmentManager.beginTransaction()
+        childFragmentManager.beginTransaction()
                 .replace(R.id.fl_map_container, mSupportFragment).commit()
 
         return root
     }
-
 
 }
