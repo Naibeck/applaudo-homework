@@ -14,6 +14,7 @@ import com.applaudo.kotlin.applaudohomework.network.TeamService
 import com.applaudo.kotlin.applaudohomework.network.model.Team
 import com.applaudo.kotlin.applaudohomework.ui.adapter.ItemTeamClick
 import com.applaudo.kotlin.applaudohomework.ui.adapter.TeamAdapter
+import com.applaudo.kotlin.applaudohomework.ui.fragment.TeamDetailFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,6 +36,8 @@ class TeamListActivity : AppCompatActivity(), ItemTeamClick<Team> {
     @BindView(R.id.pb_team_list_loading)
     lateinit var mProgressBar: ProgressBar
 
+    private var isDetailShow: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_team_list)
@@ -45,6 +48,10 @@ class TeamListActivity : AppCompatActivity(), ItemTeamClick<Team> {
         setTitle(R.string.app_name)
 
         getTeams()
+
+        if (R.id.fl_team_list_detail_container != null) {
+            isDetailShow = true
+        }
     }
 
     private fun getTeams() {
@@ -64,10 +71,24 @@ class TeamListActivity : AppCompatActivity(), ItemTeamClick<Team> {
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (!isDetailShow) {
+            supportFragmentManager.beginTransaction().detach(TeamDetailFragment())
+                    .commit()
+        }
+    }
+
     override fun onItemSelected(item: Team) {
-        val intent: Intent = Intent(this, TeamDetailActivity::class.java)
-        intent.putExtra(Team.TEAM_LIST_TAG, item)
-        startActivity(intent)
+        if (isDetailShow) {
+            supportFragmentManager.beginTransaction()
+                    .replace(R.id.fl_team_list_detail_container, TeamDetailFragment.getInstance(item))
+                    .commit()
+        } else {
+            val intent: Intent = Intent(this, TeamDetailActivity::class.java)
+            intent.putExtra(Team.TEAM_LIST_TAG, item)
+            startActivity(intent)
+        }
     }
 
 }
